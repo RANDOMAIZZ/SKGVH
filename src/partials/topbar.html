@@ -1,0 +1,8 @@
+<div class="topbar">
+  {% for p in contacts.phones %}{% if p.primary %}
+  <a href="{{ p.raw | tel }}">{{ icon('phone') }}{{ p.raw }}</a>
+  <span>·</span>
+  {% endif %}{% endfor %}
+  <span class="spacer"></span>
+  <span>Пн–Пт 08:00–17:00</span>
+</div>

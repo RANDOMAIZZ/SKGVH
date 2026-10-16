@@ -1,0 +1,92 @@
+<!doctype html>
+<!--
+  Тестовый стенд для проверки адаптивности.
+
+  Зачем нужен: Edge в headless-режиме на Windows не даёт вьюпорт уже ~492px
+  (скриншот 390px получается просто обрезанным, и вёрстку видно неверно).
+  Внутри iframe медиазапросы считаются относительно ширины самой рамки,
+  поэтому нужную ширину получаем именно там.
+
+  Стенд не только рисует страницу, но и измеряет её внутри фрейма:
+  ищет элементы, вылезающие за правую границу, и печатает отчёт
+  широкой полосой поверх — так результат виден на скриншоте.
+
+  Использование:
+    /__testframe.html?w=390&h=1600&page=index.html
+    /__testframe.html?w=360&h=1600&page=activity.html
+-->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Адаптивный стенд</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #cbd5e1; }
+  #report {
+    margin: 0 0 8px; padding: 8px 10px;
+    font: 13px/1.5 monospace;
+    color: #0f172a; background: #f8fafc;
+    white-space: pre-wrap; word-break: break-all;
+  }
+  #report.ok   { background: #dcfce7; color: #14532d; }
+  #report.bad  { background: #fee2e2; color: #7f1d1d; }
+  iframe { display: block; border: 0; background: #fff; margin: 0 auto; }
+</style>
+</head>
+<body>
+<pre id="report">загрузка…</pre>
+<iframe id="f" title="предпросмотр"></iframe>
+<script>
+  var q = new URLSearchParams(location.search);
+  var w = parseInt(q.get('w') || '390', 10);
+  var h = parseInt(q.get('h') || '1600', 10);
+  var page = q.get('page') || 'index.html';
+
+  var f = document.getElementById('f');
+  var rep = document.getElementById('report');
+  f.style.width = w + 'px';
+  f.style.height = h + 'px';
+  f.src = '/' + page;
+
+  function measure() {
+    var d, vw, bad = [];
+    try {
+      d = f.contentDocument;
+      vw = d.documentElement.clientWidth;
+      d.querySelectorAll('body *').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width === 0 && r.height === 0) return;
+        // Внутри обрезаемого контейнера вылет за край не считается
+        for (var p = el.parentElement; p && p !== d.body; p = p.parentElement) {
+          if (getComputedStyle(p).overflow !== 'visible') return;
+        }
+        if (r.right > vw + 1) {
+          var c = el.className;
+          if (c && c.baseVal !== undefined) c = c.baseVal;
+          bad.push(el.tagName.toLowerCase() + '.' + String(c || '').slice(0, 44) +
+                   ' right=' + Math.round(r.right) + ' w=' + Math.round(r.width));
+        }
+      });
+    } catch (e) {
+      rep.textContent = 'не удалось измерить: ' + e.message;
+      return;
+    }
+    var sw = d.documentElement.scrollWidth;
+    if (bad.length === 0) {
+      rep.className = 'ok';
+      rep.textContent = '✓ ' + page + ' — вьюпорт ' + vw + 'px, scrollWidth ' + sw +
+                        'px, переполнений нет';
+    } else {
+      rep.className = 'bad';
+      rep.textContent = '✗ ' + page + ' — вьюпорт ' + vw + 'px, scrollWidth ' + sw +
+                        'px, вылезают ' + bad.length + ' элементов:\n' +
+                        bad.slice(0, 14).join('\n');
+    }
+  }
+
+  f.addEventListener('load', function () {
+    // Даём отработать шрифтам, lazy-load и reveal-анимациям
+    setTimeout(measure, 1200);
+  });
+</script>
+</body>
+</html>

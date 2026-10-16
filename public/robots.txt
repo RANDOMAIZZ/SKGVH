@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Служебные страницы не индексируем
+Disallow: /404.html
+Disallow: /webcam.html
+
+Host: sevkavgiprovodhoz.ru
+Sitemap: https://sevkavgiprovodhoz.ru/sitemap.xml

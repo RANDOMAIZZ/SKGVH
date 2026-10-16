@@ -1,0 +1,54 @@
+# Сборка сайта и публикация на GitHub Pages.
+#
+# Публикуется только папка public/, а не весь репозиторий: иначе наружу
+# уедут исходники (src/, assets-src/) и скрипты сборки.
+#
+# Одноразовая настройка в репозитории:
+#   Settings → Pages → Build and deployment → Source: GitHub Actions
+#
+# Изображения (public/img) в репозитории закоммичены: build.py их не
+# генерирует, это делает tools/images.py. Pillow в CI не нужен.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Сборка
+        run: python build.py
+
+      - name: Проверка ссылок и мета-тегов
+        run: python build.py --check
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

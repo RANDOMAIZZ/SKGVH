@@ -1,0 +1,112 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Страница памяти</span>
+    </nav>
+    <h1 data-split>Страница памяти</h1>
+    <p class="lead">
+      Память об основателе института — Константине Николаевиче Носове.
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container container--narrow">
+
+  <!-- ── Портрет и имя ────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="center" data-reveal>
+      <figure style="max-width: 300px; margin-inline: auto">
+        <div class="card__figure" style="border-radius: var(--r-lg); box-shadow: var(--sh-lg)">
+          {{ picture(memorial.portraitBase, memorial.name, sizes="(max-width: 640px) 84vw, 300px", priority=true) }}
+        </div>
+      </figure>
+
+      <h2 class="mt-3">{{ memorial.name }}</h2>
+      <p class="dates soft">{{ memorial.dates }}</p>
+    </div>
+  </section>
+
+  <!-- ── Текст ────────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="stack-lg" data-reveal>
+      {% for p in memorial.paragraphs %}
+      <p class="lead" style="font-size: 1.0625rem">{{ p }}</p>
+      {% endfor %}
+    </div>
+
+    <hr class="divider mt-4">
+
+    <!-- Эпитафия -->
+    <figure class="center mt-4" data-reveal
+            style="padding: clamp(1.5rem,4vw,2.5rem); background: var(--brand-50);
+                   border-radius: var(--r-lg); border: 1px solid var(--brand-100)">
+      <span class="accent">{{ icon('quote') }}</span>
+      <blockquote class="lead mt-2" style="font-style: italic; color: var(--ink-800)">
+        Дела мелиораторов продолжаются.
+      </blockquote>
+    </figure>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Публикация ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid" data-reveal>
+      <div class="col-5">
+        <div class="card__figure" style="border-radius: var(--r-lg)">
+          {{ picture('img/g-nosov-book', memorial.articleTitle, sizes="(max-width: 992px) 92vw, 40vw") }}
+        </div>
+      </div>
+      <div class="col-7">
+        <p class="eyebrow">Публикация</p>
+        <h2 >{{ memorial.articleTitle }}</h2>
+        <p class="soft" style="color: var(--text-soft)">Автор: {{ memorial.author }}</p>
+        <p class="soft mt-2">
+          Воспоминания об институтской школе, о работе в отрасли
+          и о людях, которые продолжают дело мелиорации.
+        </p>
+        <a class="btn btn-primary mt-3" href="{{ memorial.articlePdf }}"
+           target="_blank" rel="noopener noreferrer">
+          {{ icon('download') }} Открыть PDF
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Наследие ─────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="card card--glow" data-reveal>
+      <p class="eyebrow eyebrow--center" style="color: var(--brand-300)">Наследие</p>
+      <p class="lead" style="color: rgba(255,255,255,.86); max-width: 54ch; margin-inline: auto">
+        Ученики и последователи продолжают работу, которую он начал:
+        изыскания, проектирование и строительство объектов
+        водохозяйственного назначения.
+      </p>
+      <div class="row mt-3" style="justify-content: center">
+        <a class="btn btn-grad" href="company.html">
+          {{ icon('users') }} Об институте
+        </a>
+        <a class="btn btn-outline" href="activity.html">
+          {{ icon('blueprint') }} Наши услуги
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

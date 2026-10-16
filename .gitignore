@@ -1,0 +1,18 @@
+# Стенды проверки вёрстки: попадают в public/ только с --dev,
+# на сервер и в Pages выкладываться не должны
+public/__testall.html
+public/__testframe.html
+
+# Служебное
+.opencode/          # настройки агента и его node_modules — 52 МБ, сайту не нужны
+.playwright-mcp/
+__pycache__/
+*.pyc
+
+# Сборочный мусор
+*.bak
+*.bak-*
+
+# public/img и public/css коммитируются намеренно:
+# картинки генерирует tools/images.py, а без них в CI соберётся
+# страница без фотографий

@@ -1,0 +1,124 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Веб-камеры</span>
+    </nav>
+    <h1 data-split>Веб-камеры Кавказских Минеральных Вод</h1>
+    <p class="lead">
+      Виды с горы Машук и окрестностей — полезно для оценки состояния
+      склонов и погоды на высоте. Трансляции ведут сторонние операторы,
+      мы отбираем только работающие каналы.
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── Трансляции ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid g-2" data-reveal-group>
+      {% for c in cameras %}
+      <div>
+        <article class="card" style="padding: 0">
+          <div class="card__body">
+              <h2 class="card__title" style="font-size: 1.125rem">{{ c.title }}</h2>
+            <p class="card__text small">
+              Трансляция ведётся сторонним оператором.
+              Ссылка откроется в новой вкладке.
+            </p>
+            <a class="btn btn-ghost btn-block mt-3"
+               href="{{ c.src }}" target="_blank" rel="noopener noreferrer">
+              {{ icon('external') }} Открыть трансляцию
+            </a>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Погода ───────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Погода</p>
+      <h2 >Прогнозы и данные наблюдений</h2>
+      <p class="soft">
+        Ссылки ведут на официальные сервисы. Ранние версии сайта подключали
+        устаревшие картинки-информеры, часть из которых больше не работает,
+        поэтому здесь только актуальные ссылки.
+      </p>
+    </div>
+
+    <div class="grid g-2" data-reveal-group>
+      <div>
+        <a class="card" href="https://yandex.ru/pogoda/pyatigorsk" target="_blank"
+           rel="noopener noreferrer" style="text-decoration: none">
+          <h3 class="card__title">Яндекс Погода — Пятигорск</h3>
+          <p class="card__text">Прогноз по городу и ощущаемым ощущениям.</p>
+          <span class="service-card__more">{{ icon('external') }} Перейти</span>
+        </a>
+      </div>
+      <div>
+        <a class="card" href="https://www.meteoblue.com/ru/weather/week/week_summary_pyatigorsk_russia_498651" target="_blank"
+           rel="noopener noreferrer" style="text-decoration: none">
+          <h3 class="card__title">Meteoblue — недельный прогноз</h3>
+          <p class="card__text">Подробный прогноз с картой осадков.</p>
+          <span class="service-card__more">{{ icon('external') }} Перейти</span>
+        </a>
+      </div>
+      <div>
+        <a class="card" href="https://www.yr.no/forecast/daily-table/2-498651/Ukraine/Kyiv/Kyiv" target="_blank"
+           rel="noopener noreferrer" style="text-decoration: none">
+          <h3 class="card__title">Yr.no — наблюдения</h3>
+          <p class="card__text">Фактические данные метеостанции рядом.</p>
+          <span class="service-card__more">{{ icon('external') }} Перейти</span>
+        </a>
+      </div>
+      <div>
+        <a class="card" href="https://maps.yandex.ru/?ll=43.073778%2C44.039995&amp;spn=0.175095%2C0.065877&amp;z=13&amp;l=pmap%2Ctrf%2Ctrfe"
+           target="_blank" rel="noopener noreferrer" style="text-decoration: none">
+          <h3 class="card__title">Ситуация на дорогах</h3>
+          <p class="card__text">Пробки в Кавказских Минеральных Водах.</p>
+          <span class="service-card__more">{{ icon('external') }} Открыть карту</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Заметка ──────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="card" data-reveal>
+      <div class="feature">
+        <div class="feature__icon">{{ icon('heart') }}</div>
+        <div>
+          <h3>Обратите внимание</h3>
+          <p>
+            Страница сделана для инженерных наблюдений: по кадрам
+            можно оценить видимость, осадки и состояние склонов.
+            Для официальных данных о погоде и предупреждений
+            об опасных явлениях используйте сайты
+            <a href="https://www.meteoalarm.ru/" target="_blank" rel="noopener noreferrer">Росгидромета</a>
+            и регионального МЧС.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

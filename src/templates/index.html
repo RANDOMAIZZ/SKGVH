@@ -1,0 +1,308 @@
+{% extends "layout" %}
+
+{% block main %}
+
+  <!-- ── Hero ───────────────────────────────────────────────────────── -->
+  <!-- Вне .container: он должен быть во всю ширину экрана -->
+  <section class="hero">
+    <!-- <picture>, а не CSS-фон: у фона нет srcset, на телефоне
+         загрузилась бы полноразмерная картинка -->
+    <picture class="hero__bg" data-parallax="0.16">
+      <source type="image/webp"
+              srcset="img/hero-480.webp 480w, img/hero-768.webp 768w,
+                      img/hero-1024.webp 1024w, img/hero-1440.webp 1440w,
+                      img/hero-1920.webp 1920w"
+              sizes="100vw">
+      <img src="img/hero-1920.jpg" alt=""
+           srcset="img/hero-480.jpg 480w, img/hero-768.jpg 768w,
+                   img/hero-1024.jpg 1024w, img/hero-1440.jpg 1440w,
+                   img/hero-1920.jpg 1920w"
+           sizes="100vw"
+           fetchpriority="high" decoding="async" width="1920" height="1080">
+    </picture>
+
+    <div class="container container--wide">
+      <div class="hero__inner">
+        <p class="badge" data-hero style="--hero-i:0">
+          <span class="badge-dot"></span> Пятигорск · работаем с {{ site.founded }} года
+        </p>
+
+        <h1 data-hero style="--hero-i:1">
+          <em>Водохозяйственное</em>
+          <em class="grad">проектирование</em>
+          <em>полного цикла</em>
+        </h1>
+
+        <p class="hero__lead" data-hero style="--hero-i:2">
+          Инженерные изыскания, лабораторные исследования, проектирование
+          объектов, строительные работы и защита от селевых потоков —
+          от предпроектных исследований до сдачи готового объекта.
+        </p>
+
+        <div class="hero__actions" data-hero style="--hero-i:3">
+          <a class="btn btn-grad btn-lg" href="addr_rek.html#request">
+            {{ icon('mail') }} Обсудить задачу
+          </a>
+          <a class="btn btn-outline btn-lg" href="activity.html">
+            Наши услуги {{ icon('arrow-right') }}
+          </a>
+        </div>
+
+        <div class="hero__facts" data-hero style="--hero-i:4">
+          <div class="hero__fact"><b>6</b><span>направлений работ</span></div>
+          <div class="hero__fact"><b>№100-39</b><span>аккредитованная лаборатория</span></div>
+          <div class="hero__fact"><b>ISO 9001</b><span>менеджмент качества</span></div>
+          <div class="hero__fact"><b>3</b><span>офиса</span></div>
+        </div>
+      </div>
+    </div>
+
+    <span class="scroll-hint" aria-hidden="true"></span>
+  </section>
+
+  <!-- ── Бегущая строка направлений ──────────────────────────────────── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {% for m in marquee %}<span class="marquee__item">{{ m }}</span>{% endfor %}
+      {% for m in marquee %}<span class="marquee__item">{{ m }}</span>{% endfor %}
+    </div>
+  </div>
+
+<div class="container container--wide">
+
+  <!-- ── Отраслевые задачи ───────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Чем мы занимаемся</p>
+      <h2 >Решаем задачи водохозяйственного комплекса</h2>
+      <p class="soft">
+        Территории Северного Кавказа предъявляют к инженерным системам особые
+        требования: высокая сейсмичность, оползневая и селевая активность,
+        дефицит водных ресурсов, резкие перепады водности. Проектируем с учётом
+        этих условий, а не по типовым решениям.
+      </p>
+    </div>
+
+    <div class="grid" data-reveal-group>
+      {% for s in services %}
+      <div class="col-4">
+        <article class="card glass">
+          <span class="card__index" aria-hidden="true">{{ loop.index }}</span>
+          <h3 class="card__title">{{ s.title }}</h3>
+          <p class="card__text">{{ s.lead }}</p>
+          <ul class="card__list">
+            {% for it in s.items %}
+            <li>{{ icon('check-circle') }}<span>{{ it }}</span></li>
+            {% endfor %}
+          </ul>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="center mt-4" data-reveal>
+      <a class="btn btn-outline" href="activity.html">
+        Подробнее об услугах {{ icon('arrow-right') }}
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Показатели ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow eyebrow--center">Институт в цифрах</p>
+      <h2 >Подтверждённый статус</h2>
+      <p class="soft">
+        Работаем по системе менеджмента качества, ведём деятельность
+        на основании лицензий и свидетельств СРО.
+      </p>
+    </div>
+
+    <div class="metrics" data-reveal>
+      {% for m in metrics %}
+      <div class="metric glass">
+        <div class="metric__value"
+             {% if m.count %}data-count="{{ m.count }}" data-duration="1600"{% endif %}>{{ m.value }}</div>
+        <div class="metric__label">{{ m.label }}</div>
+        <div class="metric__hint">{{ m.hint }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="center mt-4" data-reveal>
+      <a class="btn btn-outline" href="certs.html">
+        {{ icon('shield') }} Лицензии и сертификаты
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Как мы работаем ──────────────────────────────────────────────── -->
+  <section class="section section--panel">
+    <div class="grid">
+      <div class="col-5" data-reveal="left">
+        <p class="eyebrow">Процесс</p>
+        <h2 >Как устроена работа над проектом</h2>
+        <p class="soft">
+          Пять этапов с фиксированными сроками и промежуточными согласованиями.
+          Вы понимаете, что происходит с задачей, на каждом шаге.
+        </p>
+        <a class="btn btn-outline mt-3" href="activity.html#process">
+          Подробно о процессе {{ icon('arrow-right') }}
+        </a>
+      </div>
+
+      <div class="col-7" data-reveal="right">
+        <ol class="timeline">
+          {% for p in process %}
+          <li class="timeline__item">
+            <div class="timeline__num">{{ p.num }}</div>
+            <div class="timeline__body">
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.text }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Преимущества ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Почему мы</p>
+      <h2 >Четыре причины работать с институтом</h2>
+    </div>
+
+    <div class="grid g-2" data-reveal-group>
+      {% for a in advantages %}
+      <div>
+        <div class="feature">
+          <div class="feature__icon">{{ icon(a.icon) }}</div>
+          <div>
+            <h3>{{ a.title }}</h3>
+            <p>{{ a.text }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Проекты ──────────────────────────────────────────────────────── -->
+  {% for p in projects %}
+  <section class="section" style="padding-top: 0">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{{ p.eyebrow }}</p>
+      <h2 >{{ p.title }}</h2>
+      <p class="soft">{{ p.text }}</p>
+    </div>
+    <div data-reveal>
+      <a class="btn btn-primary" href="{{ p.url }}"
+         target="_blank" rel="noopener noreferrer">
+        {{ icon('external') }} {{ p.linkText }}
+      </a>
+    </div>
+  </section>
+  {% endfor %}
+
+  <!-- ── Галерея ──────────────────────────────────────────────────────── -->
+  <section class="section section--panel">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow eyebrow--center">Галерея</p>
+      <h2 >Институт и его регион</h2>
+      <p class="soft">Кавказские Минеральные Воды — территория, для которой мы проектируем.</p>
+    </div>
+
+    <div class="gallery" data-reveal-group>
+      {% for g in gallery %}
+      <figure class="gallery__item"
+              data-lightbox="{{ g.base }}-1200.jpg"
+              data-alt="{{ g.alt | escape }}"
+              data-caption="{{ g.caption | escape }}"
+              tabindex="0" role="button" aria-label="Открыть: {{ g.alt | escape }}">
+        {{ picture(g.base, g.alt, sizes="(max-width: 660px) 92vw, (max-width: 1024px) 46vw, 30vw") }}
+        <figcaption class="gallery__cap">{{ g.caption }}</figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Контакты и заявка ────────────────────────────────────────────── -->
+  <section class="section" id="request">
+    <div class="grid">
+      <div class="col-5" data-reveal="left">
+        <p class="eyebrow">Контакты</p>
+        <h2 >Обсудим вашу задачу</h2>
+        <p class="soft">
+          Расскажите о проекте — вернёмся с оценкой объёма работ, сроков
+          и стоимости. Обычно отвечаем в течение рабочего дня.
+        </p>
+
+        <div class="contact-list mt-4">
+          <a class="contact glass" href="{{ contacts.phones[0].raw | tel }}">
+            <span class="contact__icon">{{ icon('phone') }}</span>
+            <span>
+              <span class="contact__label">Телефон · Пятигорск</span>
+              <span class="contact__value mono">{{ contacts.phones[0].raw }}</span>
+            </span>
+          </a>
+          <a class="contact glass" href="{{ contacts.phones[2].raw | tel }}">
+            <span class="contact__icon">{{ icon('phone') }}</span>
+            <span>
+              <span class="contact__label">Телефон · Москва</span>
+              <span class="contact__value mono">{{ contacts.phones[2].raw }}</span>
+            </span>
+          </a>
+          <a class="contact glass" href="{{ contacts.emails[0] | mailto }}">
+            <span class="contact__icon">{{ icon('mail') }}</span>
+            <span>
+              <span class="contact__label">Электронная почта</span>
+              <span class="contact__value">{{ contacts.emails[0] }}</span>
+            </span>
+          </a>
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('pin') }}</span>
+            <span>
+              <span class="contact__label">Главный офис</span>
+              <span class="contact__value">{{ contacts.officeShort }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-7" data-reveal="right">
+        <div class="card" style="padding: clamp(1.5rem, 3vw, 2.5rem)">
+          <p class="eyebrow">Куда писать</p>
+          <h3>Отдел проектов</h3>
+          <p class="soft small mt-1">
+            На любой из адресов. Для быстрого ответа укажите в теме
+            <span class="mono">Запрос КП</span> или <span class="mono">Запрос ТЗ</span>.
+          </p>
+
+          <div class="stack mt-4">
+            {% for e in contacts.emails %}
+            <a class="btn btn-ghost btn-block" href="{{ e | mailto }}">
+              {{ icon('mail') }} {{ e }}
+            </a>
+            {% endfor %}
+            <a class="btn btn-grad btn-block btn-lg" href="{{ contacts.phones[0].raw | tel }}">
+              {{ icon('phone') }} Позвонить в Пятигорск
+            </a>
+          </div>
+
+          <hr class="divider mt-4 mb-3">
+
+          <dl class="specs">
+            <dt>Часы работы</dt><dd>{{ contacts.workHours }}</dd>
+            <dt>Юридический адрес</dt><dd>{{ contacts.legalAddress }}</dd>
+            <dt>Факс</dt><dd class="mono">{{ contacts.fax }}</dd>
+            <dt>Генеральный директор</dt><dd>{{ requisites.ceo }}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

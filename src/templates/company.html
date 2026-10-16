@@ -1,0 +1,220 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">О компании</span>
+    </nav>
+    <h1 data-split>О компании</h1>
+    <p class="lead">
+      {{ site.tagline }}. Работаем с {{ site.founded }} года,
+      головной офис — Пятигорск, представительства — Москва и Ростов-на-Дону.
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── О институте ──────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid">
+      <div class="col-7" data-reveal="left">
+        <p class="eyebrow">Кто мы</p>
+        <h2 >Проектный институт полного цикла</h2>
+        <div class="stack mt-3">
+          <p class="lead">
+            {{ site.shortLegalName }} — проектная организация, созданная
+            для выполнения комплекса работ по водохозяйственному
+            и мелиоративному строительству.
+          </p>
+          <p>
+            Мы объединили изыскания, лабораторию, проектный отдел
+            и строительное подразделение в одной структуре. Это значит,
+            что заказчик не координирует четыре разные организации:
+            методика работ единая, документация согласованная,
+            ответственность одна.
+          </p>
+<p>
+            Территория ответственности — Кавказские Минеральные Воды
+            и прилегающие регионы. Здесь мы знаем геологию, гидрологию
+            и особенности земельных отношений, поэтому проектные решения
+            проходят экспертизу с первого раза.
+          </p>
+          <p>
+            На все работы имеются необходимые сертификаты и лицензии.
+            На каждом этапе — от изысканий до выпуска проекта —
+            применяются современные оборудование, механизмы и приборы,
+            которые планомерно обновляются. Подразделения размещены
+            в помещениях, отвечающих современным требованиям, каждое
+            рабочее место подключено к единой сети.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-5" data-reveal="right">
+        <div class="stack">
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('building') }}</span>
+            <span>
+              <span class="contact__label">Полное наименование</span>
+              <span class="contact__value">{{ site.shortLegalName }}</span>
+            </span>
+          </div>
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('pin') }}</span>
+            <span>
+              <span class="contact__label">Юридический адрес</span>
+              <span class="contact__value">{{ contacts.legalAddress }}</span>
+            </span>
+          </div>
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('users') }}</span>
+            <span>
+              <span class="contact__label">Генеральный директор</span>
+              <span class="contact__value">{{ requisites.ceo }}</span>
+            </span>
+          </div>
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('award') }}</span>
+            <span>
+              <span class="contact__label">Основной вид деятельности</span>
+              <span class="contact__value mono">ОКВЭД {{ requisites.okved }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Показатели ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow eyebrow--center">Показатели</p>
+      <h2 >Институт в цифрах</h2>
+    </div>
+    <div class="metrics" data-reveal>
+      {% for m in metrics %}
+      <div class="metric glass">
+        <div class="metric__value">{{ m.value }}</div>
+        <div class="metric__label">{{ m.label }}</div>
+        <div class="metric__hint">{{ m.hint }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Структура ────────────────────────────────────────────────────── -->
+  <section class="section section--panel">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Структура</p>
+      <h2 >Подразделения</h2>
+      <p class="soft">
+        Каждое направление ведёт профильный специалист,
+        а работы на площадке координирует начальник участка.
+      </p>
+    </div>
+
+    <div class="grid g-3" data-reveal-group>
+      {% for s in services %}
+      <div>
+        <article class="card glass">
+          <span class="card__index" aria-hidden="true">{{ loop.index }}</span>
+          <h3 class="card__title">{{ s.title }}</h3>
+          <p class="card__text">{{ s.lead }}</p>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Офисы ────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">География</p>
+      <h2 >Наши офисы</h2>
+    </div>
+
+    <div class="grid g-3" data-reveal-group>
+      {% for o in offices %}
+      <div>
+        <article class="office glass">
+          <div class="office__city">
+            <h3>{{ o.city }}</h3>
+            {% if o.primary %}<span class="badge">Основной</span>{% endif %}
+          </div>
+          <p class="office__role">{{ o.role }}</p>
+          <p>{{ o.address }}</p>
+          <div class="office__phones">
+            {% for ph in o.phones %}
+            <a href="{{ ph | tel }}" class="mono small">{{ ph }}</a>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Основатель ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="card card--glow" data-reveal>
+      <div class="grid">
+        <div class="col-4">
+          <div class="card__figure" style="border-radius: var(--r-md)">
+            {{ picture(memorial.portraitBase, memorial.name, sizes="(max-width: 992px) 92vw, 30vw") }}
+          </div>
+        </div>
+        <div class="col-8">
+          <p class="eyebrow" style="color: var(--brand-300)">Основатель института</p>
+          <h2 style="color: var(--white)">{{ memorial.name }}</h2>
+          <p class="dates soft" style="color: rgba(255,255,255,.6)">{{ memorial.dates }}</p>
+          <p class="lead mt-2" style="color: rgba(255,255,255,.84)">
+            Автор и руководитель институтской школы, воспитавший большое число
+            специалистов. Награждён {{ memorial.award }}.
+          </p>
+          <a class="btn btn-outline mt-3" href="nosovkn.html">
+            Страница памяти {{ icon('arrow-right') }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="center" data-reveal>
+      <h2 >Готовы обсудить проект?</h2>
+      <p class="soft" style="margin-inline: auto">
+        Пришлите техническое задание или просто опишите задачу —
+        ответим в течение рабочего дня.
+      </p>
+      <div class="row mt-3" style="justify-content: center">
+        <a class="btn btn-primary btn-lg" href="{{ contacts.emails[0] | mailto }}">
+          {{ icon('mail') }} {{ contacts.emails[0] }}
+        </a>
+        <a class="btn btn-ghost btn-lg" href="addr_rek.html">
+          Контакты и реквизиты {{ icon('arrow-right') }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,199 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Услуги</span>
+    </nav>
+    <h1 data-split>Услуги</h1>
+    <p class="lead">
+      Шесть направлений, которые закрывают весь цикл работ над объектом
+      водохозяйственного назначения — от изысканий площадки до защиты
+      территории от селевых потоков.
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── Детальные услуги ─────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid" data-reveal-group>
+      {% for s in services %}
+      <div class="col-6">
+        <article class="card glass service-card">
+          <span class="card__index" aria-hidden="true">{{ loop.index }}</span>
+          <h2 class="card__title">{{ s.title }}</h2>
+          <p class="card__text">{{ s.lead }}</p>
+
+          <ul class="card__list">
+            {% for it in s.items %}
+            <li>{{ icon('check-circle') }}<span>{{ it }}</span></li>
+            {% endfor %}
+          </ul>
+
+          <button class="service-card__more" type="button" data-expand aria-expanded="false">
+            <span data-expand-label>Подробнее</span>
+            {{ icon('chevron-down') }}
+          </button>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Процесс ──────────────────────────────────────────────────────── -->
+  <section class="section" id="process">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Процесс</p>
+      <h2 >Как мы работаем</h2>
+      <p class="soft">
+        Каждый этап заканчивается результатом, который можно посмотреть
+        и проверить. Сроки и стоимость фиксируются в договоре до начала работ.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="col-7" data-reveal="left">
+        <ol class="timeline">
+          {% for p in process %}
+          <li class="timeline__item">
+            <div class="timeline__num">{{ p.num }}</div>
+            <div class="timeline__body">
+              <h3>{{ p.title }}</h3>
+              <p>{{ p.text }}</p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      <div class="col-5" data-reveal="right">
+        <div class="card card--glow" style="align-items: flex-start; text-align: left">
+          <div class="card__icon">{{ icon('check-circle') }}</div>
+          <h3>Что вы получаете</h3>
+          <ul class="card__list mt-2">
+            <li>{{ icon('check-circle') }}<span>Комплект технической документации</span></li>
+            <li>{{ icon('check-circle') }}<span>Протоколы лабораторных испытаний</span></li>
+            <li>{{ icon('check-circle') }}<span>Топографические и геодезические материалы</span></li>
+            <li>{{ icon('check-circle') }}<span>Сопровождение государственной экспертизы</span></li>
+            <li>{{ icon('check-circle') }}<span>Авторский надзор при строительстве</span></li>
+          </ul>
+          <a class="btn btn-grad btn-block mt-4" href="addr_rek.html#request">
+            {{ icon('mail') }} Запросить оценку
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Частые вопросы ───────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Вопросы</p>
+      <h2 >Частые вопросы</h2>
+    </div>
+
+    <div class="acc" data-reveal>
+      <details class="acc__item">
+        <summary class="acc__summary">
+          Сколько стоит проект?
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"></use></svg>
+        </summary>
+        <div class="acc__content">
+          Стоимость зависит от состава и объёма работ, удалённости площадки
+          и глубины предпроектных исследований. После первичной консультации
+          мы готовим коммерческое предложение с фиксированной сметой —
+          без скрытых доплат в процессе.
+        </div>
+      </details>
+
+      <details class="acc__item">
+        <summary class="acc__summary">
+          Нужно ли выезжать на площадку до подписания договора?
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"></use></svg>
+        </summary>
+        <div class="acc__content">
+          Как правило, да: объём и стоимость невозможно определить только по
+          документам. Выезд инженера на площадку — стандартная часть
+          первичного обследования и обычно входит в стоимость работ.
+        </div>
+      </details>
+
+      <details class="acc__item">
+        <summary class="acc__summary">
+          Работаете ли вы с другими регионами?
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"></use></svg>
+        </summary>
+        <div class="acc__content">
+          Да. Основной регион — Северный Кавказ и Юг России, но проектные
+          работы и внешняя экспертиза выполняются по всей стране.
+          Географическая удалённость влияет на сроки выездных работ,
+          которые мы заранее фиксируем в договоре.
+        </div>
+      </details>
+
+      <details class="acc__item">
+        <summary class="acc__summary">
+          Делаете ли вы проектную документацию для экспертизы?
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"></use></svg>
+        </summary>
+        <div class="acc__content">
+          Да. Готовим разделы в соответствии с требованиями Градостроительного
+          кодекса и нормативов, применимых к объекту, и сопровождаем документ
+          на государственной экспертизе, внося изменения по замечаниям.
+        </div>
+      </details>
+
+      <details class="acc__item">
+        <summary class="acc__summary">
+          Можно ли заказать только лабораторные исследования?
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"></use></svg>
+        </summary>
+        <div class="acc__content">
+          Да, это самостоятельное направление. Аккредитованная комплексная
+          лаборатория выполняет анализы воды, грунтов и дорожно-строительных
+          материалов как для собственных проектов, так и по внешним заказам.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="card card--glow" data-reveal>
+      <h2 style="color: var(--white)">Расскажите о задаче</h2>
+      <p class="lead" style="color: rgba(255,255,255,.82); max-width: 52ch; margin-inline: auto">
+        Опишите объект и что нужно сделать — подготовим предложение
+        с составом работ, сроками и стоимостью.
+      </p>
+      <div class="row mt-3" style="justify-content: center">
+        <a class="btn btn-grad btn-lg" href="{{ contacts.emails[0] | mailto }}">
+          {{ icon('mail') }} {{ contacts.emails[0] }}
+        </a>
+        <a class="btn btn-outline btn-lg" href="{{ contacts.phones[0].raw | tel }}">
+          {{ icon('phone') }} {{ contacts.phones[0].raw }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

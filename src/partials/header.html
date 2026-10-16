@@ -1,0 +1,39 @@
+<div class="scroll-progress" aria-hidden="true">
+  <div class="scroll-progress__bar"></div>
+</div>
+
+<header class="site-header glass">
+  <div class="container site-header__inner">
+    <a class="brand" href="index.html" aria-label="{{ site.name }} — на главную">
+      <img class="brand__mark" src="img/logo-40.png" width="40" height="40" alt="" aria-hidden="true">
+      <span class="brand__text">
+        <span class="brand__name">{{ site.name }}</span>
+        <span class="brand__sub">Гидропроект · Мелиорация</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Основная навигация">
+      {% for item in nav %}
+      <a class="nav__link" href="{{ item.url }}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="spacer"></div>
+
+    <div class="header-actions">
+      <a class="icon-btn" href="{{ contacts.emails[0] | mailto }}"
+         aria-label="Написать на почту {{ contacts.emails[0] }}">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg>
+      </a>
+      <a class="icon-btn" href="{{ contacts.phones[0].raw | tel }}"
+         aria-label="Позвонить {{ contacts.phones[0].raw }}">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>
+      </a>
+      <button class="burger" type="button" aria-expanded="false"
+              aria-controls="site-nav" aria-label="Открыть меню">
+        <svg class="icon icon-burger" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg>
+        <svg class="icon icon-close" aria-hidden="true" focusable="false"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+  </div>
+</header>

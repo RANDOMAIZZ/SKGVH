@@ -1,0 +1,63 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+
+      <div>
+        <div class="footer__brand">
+          <img src="img/logo-64.png" width="46" height="46" alt="" aria-hidden="true">
+          <span>
+            <b>{{ site.name }}</b>
+            <span>{{ site.shortLegalName }}</span>
+          </span>
+        </div>
+        <p class="footer__about">
+          Проектный институт полного цикла: от изысканий и лабораторных
+          исследований до проектирования, строительства и защиты от селевых потоков.
+        </p>
+      </div>
+
+      <div class="footer__col">
+        <h3>Разделы</h3>
+        <ul>
+          {% for item in nav %}<li><a href="{{ item.url }}">{{ item.label }}</a></li>{% endfor %}
+          <li><a href="webcam.html">Веб-камеры</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3>Контакты</h3>
+        <ul>
+          <li><a href="{{ contacts.emails[0] | mailto }}">{{ contacts.emails[0] }}</a></li>
+          <li><a href="{{ contacts.emails[1] | mailto }}">{{ contacts.emails[1] }}</a></li>
+          {% for p in contacts.phones %}
+          <li><a href="{{ p.raw | tel }}">{{ p.raw }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3>Офис</h3>
+        <ul>
+          <li>{{ contacts.officeAddress }}</li>
+          <li>{{ contacts.workHours }}</li>
+          <li><a href="addr_rek.html">Все реквизиты {{ icon('arrow-right') }}</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; {{ year }} {{ site.name }}</span>
+      <span class="row">
+        <a class="footer__to-top" href="#main">Наверх {{ icon('arrow-up') }}</a>
+        <a href="privacy.html">Политика конфиденциальности</a>
+      </span>
+    </div>
+
+    <p class="footer__legal">
+      Вся представленная на сайте информация носит информационный характер и
+      ни при каких условиях не является публичной офертой, определяемой
+      положениями статьи 437 Гражданского кодекса Российской Федерации.
+    </p>
+  </div>
+</footer>

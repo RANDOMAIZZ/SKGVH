@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+  Пакетная проверка адаптивности: все страницы в iframe заданной ширины,
+  результат — сводная таблица. Один скриншот вместо десяти.
+
+    /__testall.html?w=390
+-->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Пакетная проверка адаптивности</title>
+<style>
+  html, body { margin: 0; background: #cbd5e1; font: 13px/1.45 monospace; }
+  #out { padding: 10px 12px; background: #f8fafc; white-space: pre; }
+  #out.ok  { background: #dcfce7; color: #14532d; }
+  #out.bad { background: #fee2e2; color: #7f1d1d; }
+  /* Фреймы уводим за левый край, а не display:none:
+     в display:none элемент не получает layout и clientWidth = 0 */
+  .frames { position: absolute; left: -10000px; top: 0; }
+</style>
+</head>
+<body>
+<pre id="out">загрузка…</pre>
+<div class="frames" id="frames"></div>
+<script>
+  var PAGES = ['index.html', 'activity.html', 'company.html', 'certs.html',
+               'addr_rek.html', 'nosovkn.html', 'webcam.html', 'privacy.html',
+               '404.html'];
+
+  var w = parseInt(new URLSearchParams(location.search).get('w') || '390', 10);
+  var host = document.getElementById('frames');
+  var out = document.getElementById('out');
+  var lines = [], pending = PAGES.length, anyBad = false;
+
+  PAGES.forEach(function (page) {
+    var f = document.createElement('iframe');
+    f.style.cssText = 'width:' + w + 'px;height:220px;border:0;background:#fff';
+    f.src = '/' + page;
+    host.appendChild(f);
+
+    f.addEventListener('load', function () {
+      setTimeout(function () {
+        var vw, sw, bad = [];
+        try {
+          var d = f.contentDocument;
+          vw = d.documentElement.clientWidth;
+          sw = d.documentElement.scrollWidth;
+          d.querySelectorAll('body *').forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.width === 0 && r.height === 0) return;
+            // Элемент внутри обрезаемого контейнера (бегущая строка,
+            // выпадающее меню) не считаем переполнением страницы
+            for (var p = el.parentElement; p && p !== d.body; p = p.parentElement) {
+              var ov = getComputedStyle(p).overflow;
+              if (ov !== 'visible') return;
+            }
+            if (r.right > vw + 1) {
+              var c = el.className;
+              if (c && c.baseVal !== undefined) c = c.baseVal;
+              bad.push(el.tagName.toLowerCase() + '.' + String(c || '').slice(0, 30) +
+                       ' right=' + Math.round(r.right));
+            }
+          });
+        } catch (e) {
+          lines.push(page.padEnd(16) + ' ОШИБКА: ' + e.message);
+        }
+
+        if (typeof vw === 'undefined') {
+          // уже записано выше
+        } else if (bad.length === 0) {
+          lines.push(page.padEnd(16) + ' ok    vw=' + vw + ' scrollW=' + sw);
+        } else {
+          anyBad = true;
+          lines.push(page.padEnd(16) + ' ПЕРЕПОЛНЕНИЕ x' + bad.length +
+                     '  [' + bad.slice(0, 3).join('; ') + ']');
+        }
+
+        if (--pending === 0) {
+          out.className = anyBad ? 'bad' : 'ok';
+          out.textContent = 'Ширина iframe: ' + w + 'px\n' +
+            (anyBad ? '✗ ЕСТЬ ПЕРЕПОЛНЕНИЯ\n' : '✓ ПЕРЕПОЛНЕНИЙ НЕТ\n') +
+            lines.sort().join('\n');
+        }
+      }, 900);
+    });
+  });
+</script>
+</body>
+</html>

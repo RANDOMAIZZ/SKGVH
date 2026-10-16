@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4f1e8">
+
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.desc }}">
+<link rel="canonical" href="{{ page.canonical }}">
+<meta name="author" content="{{ site.shortLegalName }}">
+{% if page.noindex %}<meta name="robots" content="noindex, follow">{% endif %}
+
+<!-- Open Graph -->
+<meta property="og:type" content="{{ page.og_type }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.desc }}">
+<meta property="og:url" content="{{ page.canonical }}">
+<meta property="og:image" content="{{ site.url }}/{{ site.ogImage }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ site.name }} — {{ site.tagline }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.desc }}">
+<meta name="twitter:image" content="{{ site.url }}/{{ site.ogImage }}">
+
+<!-- Иконки -->
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- Оформление: светлая бумажная тема, ревизия 3 -->
+<link rel="stylesheet" href="css/theme.css?v=4">
+{% block head %}{% endblock %}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ site.shortLegalName }}",
+  "alternateName": "{{ site.name }}",
+  "url": "{{ site.url }}/",
+  "logo": "{{ site.url }}/img/logo-full.png",
+  "image": "{{ site.url }}/{{ site.ogImage }}",
+  "description": "{{ site.description }}",
+  "foundingDate": "{{ site.founded }}",
+  "taxID": "{{ requisites.inn }}",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Ипподромная, 7, строение 1",
+    "addressLocality": "Пятигорск",
+    "addressRegion": "Ставропольский край",
+    "postalCode": "357528",
+    "addressCountry": "RU"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "{{ contacts.geo.lat }}",
+    "longitude": "{{ contacts.geo.lon }}"
+  },
+  "contactPoint": [{
+    "@type": "ContactPoint",
+    "telephone": "{{ contacts.phones[0].raw }}",
+    "contactType": "sales",
+    "areaServed": "RU",
+    "availableLanguage": "Russian"
+  }],
+  "email": "{{ contacts.emails[0] }}",
+  "sameAs": []
+}
+</script>
+</head>
+
+<body>
+{% include "icons" %}
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+{% include "header" %}
+{% include "topbar" %}
+
+<main id="main"{% if page.topbar %} class="has-topbar"{% endif %}>
+{% block main %}{% endblock %}
+</main>
+
+{% include "footer" %}
+{% include "consent" %}
+{% include "analytics" %}
+
+<button class="to-top" type="button" aria-label="Наверх страницы">
+  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<script src="js/app.js?v=3" defer></script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Контакты и реквизиты</span>
+    </nav>
+    <h1 data-split>Контакты и реквизиты</h1>
+    <p class="lead">
+      {{ site.shortLegalName }} — адреса, телефоны, электронная почта
+      и полные банковские реквизиты организации.
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── Быстрые контакты ─────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid" style="align-items: start">
+
+      <div class="col-6" data-reveal="left">
+        <p class="eyebrow">Связаться</p>
+        <h2 >Телефоны и почта</h2>
+
+        <div class="contact-list mt-3">
+          {% for p in contacts.phones %}
+          <a class="contact glass" href="{{ p.raw | tel }}">
+            <span class="contact__icon">{{ icon('phone') }}</span>
+            <span>
+              <span class="contact__label">{{ p.city }}{% if p.primary %} · основной{% endif %}</span>
+              <span class="contact__value mono">{{ p.raw }}</span>
+            </span>
+          </a>
+          {% endfor %}
+
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('print') }}</span>
+            <span>
+              <span class="contact__label">Факс</span>
+              <span class="contact__value mono">{{ contacts.fax }}</span>
+            </span>
+          </div>
+
+          {% for e in contacts.emails %}
+          <a class="contact glass" href="{{ e | mailto }}">
+            <span class="contact__icon">{{ icon('mail') }}</span>
+            <span>
+              <span class="contact__label">Электронная почта{% if loop.first %} · основная{% endif %}</span>
+              <span class="contact__value">{{ e }}</span>
+            </span>
+          </a>
+          {% endfor %}
+
+          <div class="contact glass">
+            <span class="contact__icon">{{ icon('clock') }}</span>
+            <span>
+              <span class="contact__label">Часы работы</span>
+              <span class="contact__value">{{ contacts.workHours }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6" data-reveal="right">
+        <p class="eyebrow">Адреса</p>
+        <h2 >Где мы находимся</h2>
+
+        <div class="stack mt-3">
+          <div class="card glass">
+            <span class="badge mb-2">Главный офис</span>
+            <p class="card__text">{{ contacts.officeAddress }}</p>
+          </div>
+          <div class="card glass">
+            <span class="badge mb-2">Юридический адрес</span>
+            <p class="card__text">{{ contacts.legalAddress }}</p>
+          </div>
+</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Офисы ─────────────────────────────────────────────────────────── -->
+  <!-- Отдельный блок во всю ширину: внутри правой колонки три карточки
+       ужимались до 180px, а при двух колонках третья оставалась сиротой -->
+  <section class="section" style="padding-top: 0">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">География</p>
+      <h2 >Наши офисы</h2>
+    </div>
+
+    <div class="grid g-3" data-reveal-group>
+      {% for o in offices %}
+      <div>
+        <article class="office">
+          <div class="office__city">
+            <h3>{{ o.city }}</h3>
+            {% if o.primary %}<span class="badge">Основной</span>{% endif %}
+          </div>
+          <p class="office__role">{{ o.role }}</p>
+          <p>{{ o.address }}</p>
+          <div class="office__phones">
+            {% for ph in o.phones %}
+            <a href="{{ ph | tel }}" class="mono small">{{ ph }}</a>
+            {% endfor %}
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Карта ────────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">На карте</p>
+      <h2 >Головной офис</h2>
+      <p class="soft">
+        Пятигорск, ул. Ипподромная, 7, строение 1.
+      </p>
+    </div>
+
+<div class="grid" data-reveal>
+      <div class="col-8">
+        <div class="map-embed">
+          <iframe
+            title="Карта: головной офис ООО «Севкавгипроводхоз», Пятигорск, ул. Ипподромная 7"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=42.99524%2C44.04375%2C43.00724%2C44.05175&amp;layer=mapnik&amp;marker={{ contacts.geo.lat }}%2C{{ contacts.geo.lon }}"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <p class="tiny muted mt-2">
+          Карта построена на данных OpenStreetMap.
+          <a href="https://www.openstreetmap.org/?mlat={{ contacts.geo.lat }}&amp;mlon={{ contacts.geo.lon }}#map=17/{{ contacts.geo.lat }}/{{ contacts.geo.lon }}"
+             target="_blank" rel="noopener noreferrer">Открыть карту целиком</a>.
+        </p>
+      </div>
+
+      <div class="col-4">
+        <div class="stack">
+          <div class="card glass">
+            <div class="card__icon">{{ icon('pin') }}</div>
+            <h3 class="card__title">Как добраться</h3>
+            <p class="card__text">
+              Головной офис и производственная база расположены
+              в Пятигорске. Перед визитом свяжитесь с нами по телефону —
+              подготовим нужные документы и пригласим специалиста.
+            </p>
+            <a class="btn btn-ghost btn-sm mt-3"
+               href="https://2gis.ru/minvody/firm/{{ contacts.gis.id }}"
+               target="_blank" rel="noopener noreferrer">
+              {{ icon('external') }} Открыть в 2ГИС
+            </a>
+          </div>
+          <div class="card glass">
+            <div class="card__icon">{{ icon('building') }}</div>
+            <h3 class="card__title">Другие офисы</h3>
+            <ul class="card__list mt-2">
+              {% for o in offices %}{% if not o.primary %}
+              <li>{{ icon('check-circle') }}<span>{{ o.city }} — {{ o.role }}</span></li>
+              {% endif %}{% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Реквизиты ────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid">
+      <div class="col-5" data-reveal="left">
+        <p class="eyebrow">Реквизиты</p>
+        <h2 >Данные организации</h2>
+        <p class="soft">
+          Для договора, счёта и платёжного поручения.
+          Номер строки можно скопировать по клику.
+        </p>
+
+        <div class="contact-list mt-3">
+          <button class="contact glass" type="button" data-copy="4070 2810 9601 0000 0684"
+                  style="text-align: left; cursor: pointer">
+            <span class="contact__icon">{{ icon('document') }}</span>
+            <span>
+              <span class="contact__label">Расчётный счёт</span>
+              <span class="contact__value mono">4070 2810 9601 0000 0684</span>
+            </span>
+          </button>
+          <button class="contact glass" type="button" data-copy="{{ requisites.inn }}"
+                  style="text-align: left; cursor: pointer">
+            <span class="contact__icon">{{ icon('document') }}</span>
+            <span>
+              <span class="contact__label">ИНН</span>
+              <span class="contact__value mono">{{ requisites.inn }}</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-7" data-reveal="right">
+        <div class="card glass">
+          <div class="grid g-2">
+            <dl class="specs">
+              <dt>Полное наименование</dt><dd>{{ site.legalName }}</dd>
+              <dt>Сокращённое</dt><dd>{{ site.shortLegalName }}</dd>
+              <dt>ОГРН</dt><dd class="mono">{{ requisites.ogrn }}</dd>
+              <dt>ИНН</dt><dd class="mono">{{ requisites.inn }}</dd>
+              <dt>КПП</dt><dd class="mono">{{ requisites.kpp }}</dd>
+            </dl>
+            <dl class="specs">
+              <dt>ОКАТО</dt><dd class="mono">{{ requisites.okato }}</dd>
+              <dt>ОКТМО</dt><dd class="mono">{{ requisites.oktmo }}</dd>
+              <dt>ОКВЭД</dt><dd class="mono">{{ requisites.okved }}</dd>
+              <dt>ОКПО</dt><dd class="mono">{{ requisites.okpo }}</dd>
+              <dt>Юридический адрес</dt><dd>{{ contacts.legalAddress }}</dd>
+            </dl>
+          </div>
+
+          <hr class="divider mt-4 mb-3">
+
+          <h3>Банковские реквизиты</h3>
+          <div class="grid g-2 mt-2">
+            <dl class="specs">
+              <dt>Расчётный счёт</dt><dd class="mono">{{ requisites.account }}</dd>
+              <dt>Корреспондентский</dt><dd class="mono">{{ requisites.correspondent }}</dd>
+              <dt>БИК</dt><dd class="mono">{{ requisites.bik }}</dd>
+            </dl>
+            <dl class="specs">
+              <dt>Кредитная организация</dt><dd>{{ requisites.bank }}</dd>
+              <dt>Адрес банка</dt><dd>{{ requisites.bankAddress }}</dd>
+              <dt>Руководитель</dt><dd>{{ requisites.ceo }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Заявка ───────────────────────────────────────────────────────── -->
+  <section class="section" id="request">
+    <div class="card card--glow" data-reveal>
+      <h2 style="color: var(--white)">Готовы обсудить задачу</h2>
+      <p class="lead" style="color: rgba(255,255,255,.82); max-width: 52ch; margin-inline: auto">
+        Опишите объект и что требуется сделать — подготовим предложение
+        с составом работ, сроками и стоимостью.
+      </p>
+      <div class="row mt-3" style="justify-content: center">
+        <a class="btn btn-grad btn-lg" href="{{ contacts.emails[0] | mailto }}">
+          {{ icon('mail') }} {{ contacts.emails[0] }}
+        </a>
+        <a class="btn btn-outline btn-lg" href="{{ contacts.phones[0].raw | tel }}">
+          {{ icon('phone') }} {{ contacts.phones[0].raw }}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

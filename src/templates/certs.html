@@ -1,0 +1,129 @@
+{% extends "layout" %}
+
+{% block main %}
+<section class="page-hero">
+  <div class="container">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Лицензии и сертификаты</span>
+    </nav>
+    <h1 data-split>Лицензии и сертификаты</h1>
+    <p class="lead">
+      Все работы выполняются на основании лицензий и свидетельств СРО.
+      Система менеджмента качества института сертифицирована
+      по ГОСТ ИСО 9001-2015 (ISO 9001:2015).
+    </p>
+  </div>
+  {% include "schematic" %}
+
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,64 C180,110 360,18 540,44 C720,70 900,104 1080,70 C1260,36 1380,44 1440,58 L1440,110 L0,110 Z" fill="rgba(255,255,255,.07)"/>
+    </svg>
+    <svg class="w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+      <path d="M0,72 C200,40 340,92 560,74 C780,56 940,26 1160,52 C1300,69 1400,60 1440,66 L1440,110 L0,110 Z" fill="rgba(255,255,255,.05)"/>
+    </svg>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- ── Статус ───────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="metrics" data-reveal>
+      {% for m in metrics %}
+      <div class="metric glass">
+        <div class="metric__value">{{ m.value }}</div>
+        <div class="metric__label">{{ m.label }}</div>
+        <div class="metric__hint">{{ m.hint }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ── Документы ────────────────────────────────────────────────────── -->
+  <section class="section" style="padding-top: 0">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Документы</p>
+      <h2 >Перечень документов</h2>
+      <p class="soft">
+        Оригиналы документов предоставляются по письменному запросу
+        в отдел проектов. Копии высылаем на электронную почту в течение
+        одного рабочего дня.
+      </p>
+    </div>
+
+    <div class="stack" data-reveal-group>
+      {% for c in certs %}
+      <article class="doc glass">
+        <span class="doc__icon">{{ icon(c.icon) }}</span>
+
+        <div>
+          <h3 class="doc__title">{{ c.title }}</h3>
+          <p class="doc__meta">{{ c.subtitle }}</p>
+          <p class="doc__meta">{{ c.holder }}</p>
+        </div>
+
+        <div class="doc__year">{{ c.year }}</div>
+
+        <div class="doc__actions">
+          <a class="btn btn-ghost btn-sm" href="{{ c.pdf }}"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Открыть PDF: {{ c.title | escape }}">
+            {{ icon('download') }} <span>PDF</span>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <p class="tiny muted mt-3">
+      Файлы лежат в каталоге <span class="mono">/files/</span> на сервере.
+      Если ссылка не открывается — запросите документ
+      на <a href="{{ contacts.emails[0] | mailto }}">{{ contacts.emails[0] }}</a>.
+    </p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── Запрос ───────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="grid">
+      <div class="col-5" data-reveal="left">
+        <p class="eyebrow">Запрос</p>
+        <h2 >Нужны документы для тендера?</h2>
+        <p class="soft">
+          Часто лицензии требуются до подачи заявки — напишите заранее,
+          и мы вышлём комплект с подтверждением подлинности.
+        </p>
+        <div class="stack mt-3">
+          <a class="btn btn-primary btn-block btn-lg" href="{{ contacts.emails[0] | mailto }}">
+            {{ icon('mail') }} Запросить документы
+          </a>
+          <a class="btn btn-ghost btn-block" href="{{ contacts.phones[0].raw | tel }}">
+            {{ icon('phone') }} {{ contacts.phones[0].raw }}
+          </a>
+        </div>
+      </div>
+
+      <div class="col-7" data-reveal="right">
+        <div class="card glass">
+          <h3>Что указывать в письме</h3>
+          <ul class="card__list mt-2">
+            <li>{{ icon('check-circle') }}<span>Наименование организации заказчика</span></li>
+            <li>{{ icon('check-circle') }}<span>Название тендера или проекта</span></li>
+            <li>{{ icon('check-circle') }}<span>Номер закупки, если он есть</span></li>
+            <li>{{ icon('check-circle') }}<span>Срок подачи документов</span></li>
+          </ul>
+          <p class="soft small mt-3">
+            Эти данные нужны для корректного оформления сопроводительного
+            письма и подтверждения соответствия требованиям закупки.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

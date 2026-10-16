@@ -1,0 +1,31 @@
+{
+  "name": "Севкавгипроводхоз",
+  "short_name": "СКГВХ",
+  "description": "Проектный институт полного цикла: инженерные изыскания, лабораторные исследования, проектирование водохозяйственных объектов, строительство, защита от селевых потоков.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d1f4d",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

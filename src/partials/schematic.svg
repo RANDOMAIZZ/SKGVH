@@ -1,0 +1,91 @@
+<!--
+  Анимированная схема водоснабжения.
+
+  Не брал готовый файл со стороны: любой сторонний SVG пришлось бы лицензировать
+  и подгонять под стиль, а здесь получается точно в тон сайту и в разы легче.
+
+  Анимация целиком на CSS: штрихи «текут» по каналам (stroke-dashoffset),
+  узлы пульсируют, слои медленно расходятся. Скрипт не нужен — работает даже
+  при prefers-reduced-motion (там анимации просто выключаются).
+-->
+<svg class="schematic" viewBox="0 120 1200 360" preserveAspectRatio="xMidYMid meet"
+     aria-hidden="true" focusable="false">
+
+  <!-- Магистраль: водозабор → насосная → очистка → сеть -->
+  <g class="layer-a">
+    <!-- каналы (неподвижная основа) -->
+    <path class="channel" d="M-20 300 H300 a60 60 0 0 1 60 60 V430"/>
+    <path class="channel" d="M-20 300 H300 a60 60 0 0 0 60-60 V140"/>
+    <path class="channel" d="M360 140 H620 a60 60 0 0 1 60 60 V240"/>
+    <path class="channel" d="M360 360 H620 a60 60 0 0 0 60-60 V240"/>
+    <path class="channel" d="M680 240 H900 a50 50 0 0 1 50 50 V300"/>
+    <path class="channel" d="M950 300 H1260"/>
+
+    <!-- поток воды -->
+    <path class="flow" d="M-20 300 H300 a60 60 0 0 1 60 60 V430"/>
+    <path class="flow flow--rev" d="M-20 300 H300 a60 60 0 0 0 60-60 V140"/>
+    <path class="flow flow--slow" d="M360 140 H620 a60 60 0 0 1 60 60 V240"/>
+    <path class="flow flow--rev flow--slow" d="M360 360 H620 a60 60 0 0 0 60-60 V240"/>
+    <path class="flow" d="M680 240 H900 a50 50 0 0 1 50 50 V300"/>
+    <path class="flow flow--rev" d="M950 300 H1260"/>
+  </g>
+
+  <!-- Распределительная сеть: более медленное и редкое движение -->
+  <g class="layer-b">
+    <path class="channel" d="M1000 300 V180 H1100 V400 H1200"/>
+    <path class="channel" d="M1000 300 V420 H1180"/>
+    <path class="channel" d="M180 140 V60 H420"/>
+    <path class="channel" d="M540 430 V470 H820"/>
+
+    <path class="flow flow--slow" d="M1000 300 V180 H1100 V400 H1200"/>
+    <path class="flow flow--slow flow--rev" d="M1000 300 V420 H1180"/>
+    <path class="flow flow--slow" d="M180 140 V60 H420"/>
+    <path class="flow flow--slow flow--rev" d="M540 430 V470 H820"/>
+  </g>
+
+  <!-- Узлы: насосная, очистка, резервуары, потребители -->
+  <g>
+    <g transform="translate(300,300)">
+      <circle class="halo" r="8"/>
+      <circle class="node" r="3.4"/>
+    </g>
+    <g transform="translate(640,240)">
+      <circle class="halo halo--alt" r="8"/>
+      <circle class="node node--alt" r="3.4"/>
+    </g>
+    <g transform="translate(950,300)">
+      <circle class="halo" r="8"/>
+      <circle class="node" r="3.4"/>
+    </g>
+    <g transform="translate(1100,180)">
+      <circle class="halo halo--alt" r="6"/>
+      <circle class="node node--alt" r="2.6"/>
+    </g>
+    <g transform="translate(1100,400)">
+      <circle class="halo" r="6"/>
+      <circle class="node" r="2.6"/>
+    </g>
+    <g transform="translate(1180,420)">
+      <circle class="halo halo--alt" r="6"/>
+      <circle class="node node--alt" r="2.6"/>
+    </g>
+    <g transform="translate(420,60)">
+      <circle class="halo" r="6"/>
+      <circle class="node" r="2.6"/>
+    </g>
+    <g transform="translate(820,470)">
+      <circle class="halo halo--alt" r="6"/>
+      <circle class="node node--alt" r="2.6"/>
+    </g>
+  </g>
+
+  <!-- Подписи: техническим шрифтом, приглушены -->
+  <g class="label">
+    <text x="286" y="284">Насосная 01</text>
+    <text x="626" y="224">Очистные сооружения</text>
+    <text x="936" y="284">Резервуар</text>
+    <text x="1086" y="164">Потребитель</text>
+    <text x="806" y="492">Дренаж</text>
+  </g>
+
+</svg>
